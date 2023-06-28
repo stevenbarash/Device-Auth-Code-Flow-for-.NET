@@ -37,8 +37,8 @@ namespace WindowsFormsApp1
             System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
 
             // Define client ID and the device authorization endpoint.
-            string clientId = "0oa6mp1jjjf4deYil1d7";
-            string deviceAuthorizationEndpoint = "https://steven.oktapreview.com/oauth2/default/v1/device/authorize";
+            string clientId = "YOUR CLIENT ID";
+            string deviceAuthorizationEndpoint = "https://YOUR-OKTA-DOMAIN/oauth2/default/v1/device/authorize";
 
             // Initialize a HttpClient object.
             HttpClient client = new HttpClient();
@@ -106,8 +106,8 @@ namespace WindowsFormsApp1
         // The event handler for the Elapsed event of the timer.
         private async void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
-            string clientId = "0oa6mp1jjjf4deYil1d7";
-            string tokenEndpoint = "https://steven.oktapreview.com/oauth2/default/v1/token";
+            string clientId = "YOUR CLIENT ID";
+            string tokenEndpoint = "https://YOUR-OKTA-DOMAIN/oauth2/default/v1/token";
 
             HttpClient client = new HttpClient();
 
