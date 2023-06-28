@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -24,6 +24,7 @@ namespace WindowsFormsApp1
         }
 
         // The event handler for the click event of the login button.
+        // When the user clicks the login button, the device authorization process starts.
         private async void loginButton_Click(object sender, EventArgs e)
         {
             // Call the DeviceAuthorizationAsync method.
@@ -31,6 +32,7 @@ namespace WindowsFormsApp1
         }
 
         // The method that requests device authorization from Okta.
+        // This method initiates the device authorization process by sending a POST request to the /device/authorize endpoint.
         private async Task DeviceAuthorizationAsync()
         {
             // Specify the use of TLS 1.2
@@ -67,10 +69,12 @@ namespace WindowsFormsApp1
                 string verificationUri = responseObject.verification_uri;
 
                 // Open the verification URI in the user's browser and display the user code.
+                // The user visits the verification URL and enters the user code to authorize the device.
                 System.Diagnostics.Process.Start(verificationUri);
                 MessageBox.Show(this, $"Verify yourself {userCode}.", "Authorization Pending", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Start polling the token endpoint.
+                // After the device is authorized, the client starts polling the token endpoint to get the access token.
                 StartPollingTokenEndpoint();
             }
             else
@@ -95,6 +99,7 @@ namespace WindowsFormsApp1
         }
 
         // Method to start a timer for polling the token endpoint.
+        // The client checks the status of the device authorization by sending POST requests to the token endpoint.
         private void StartPollingTokenEndpoint()
         {
             aTimer = new System.Timers.Timer(5000); // poll every 5 seconds
@@ -104,6 +109,7 @@ namespace WindowsFormsApp1
         }
 
         // The event handler for the Elapsed event of the timer.
+        // When the timer ticks, this method sends a POST request to the token endpoint.
         private async void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
             string clientId = "YOUR CLIENT ID";
@@ -119,6 +125,7 @@ namespace WindowsFormsApp1
             if (response.IsSuccessStatusCode)
             {
                 // Parse the response and extract the access token.
+                // When the device is authorized by the user, the token endpoint responds with the access token.
                 string responseString = await response.Content.ReadAsStringAsync();
                 dynamic responseObject = JsonConvert.DeserializeObject(responseString);
 
